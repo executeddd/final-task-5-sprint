@@ -19,7 +19,7 @@ func Info(dataset []string, dp DataParser) {
 		}
 		info, err := dp.ActionInfo()
 		if err != nil {
-			fmt.Println("\nошибка при формировании строки информации")
+			fmt.Println("\nошибка при формировании строки информации", err)
 		}
 		fmt.Println(info)
 	}

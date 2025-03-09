@@ -25,16 +25,16 @@ type DaySteps struct {
 func (ds *DaySteps) Parse(datastring string) (err error) {
 	parts := strings.Split(datastring, ",")
 	if len(parts) != 2 {
-		return fmt.Errorf("длина слайса должна равняться двум")
+		return fmt.Errorf("slice len must be 2")
 	}
 	steps, err := strconv.Atoi(parts[0])
 	if err != nil {
-		return fmt.Errorf("ошибка при преобразовании количества шагов")
+		return fmt.Errorf("conversion error: %w", err)
 	}
 	ds.Steps = steps
 	duration, err := time.ParseDuration(parts[1])
 	if err != nil {
-		return fmt.Errorf("ошибка при преобразовании длительности активности")
+		return fmt.Errorf("time.ParseDuration error: %w", err)
 	}
 	ds.Duration = duration
 	return nil
@@ -48,7 +48,7 @@ func (ds *DaySteps) ActionInfo() (string, error) {
 	distance := spentenergy.Distance(ds.Steps)
 	spentCalories, err := spentenergy.WalkingSpentCalories(ds.Steps, ds.Weight, ds.Height, ds.Duration)
 	if err != nil {
-		return "", fmt.Errorf("ошибка при подсчёте сожженых калорий")
+		return "", fmt.Errorf("counting SpentCalories error %w", err)
 	}
 	return fmt.Sprintf("\nКоличество шагов: %d.\n Дистанция составила %.2f км.\n Вы сожгли %.2f ккал.",
 		ds.Steps, distance, spentCalories), nil

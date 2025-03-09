@@ -27,7 +27,7 @@ func (t *Training) Parse(datastring string) (err error) {
 	}
 	steps, err := strconv.Atoi(parts[0])
 	if err != nil {
-		return fmt.Errorf("ошибка при преобразовании шагов: %v", err)
+		return fmt.Errorf("ошибка при преобразовании шагов: %w", err)
 	}
 	t.Steps = steps
 	if parts[1] != "Бег" && parts[1] != "Ходьба" {
@@ -36,7 +36,7 @@ func (t *Training) Parse(datastring string) (err error) {
 	t.TrainingType = parts[1]
 	duration, err := time.ParseDuration(parts[2])
 	if err != nil {
-		return fmt.Errorf("ошибка при преобразовании длительности активности %v", err)
+		return fmt.Errorf("ошибка при преобразовании длительности активности %w", err)
 	}
 	t.Duration = duration
 	return nil
